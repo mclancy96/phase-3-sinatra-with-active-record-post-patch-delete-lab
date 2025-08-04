@@ -26,4 +26,12 @@ class ApplicationController < Sinatra::Base
   post '/baked_goods' do
     BakedGood.create(name: params[:name], price: params[:price], bakery_id: params[:bakery_id]).to_json
   end
+
+  patch '/bakeries/:id' do
+    bakery = Bakery.find_by(id: params[:id])
+    return unless bakery && params[:name]
+
+    bakery.update(name: params[:name])
+    bakery.to_json
+  end
 end
